@@ -1,0 +1,138 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details | VELORA</title>
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        body {
+            background: #f8f3ed;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        .details-container {
+            max-width: 850px;
+            margin: 40px auto;
+            padding: 25px;
+            background: white;
+            border-radius: 12px;
+            display: flex;
+            gap: 30px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .details-container img {
+            width: 100%;
+            max-width: 350px;
+            border-radius: 10px;
+        }
+
+        .details-info {
+            flex: 1;
+            min-width: 220px;
+        }
+
+        .details-info button {
+            display: block;
+            margin: 12px 0;
+            padding: 12px 20px;
+            background: #654b3c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="details-container">
+        <img id="product-image" src="" alt="Product image">
+
+        <div class="details-info">
+            <h1 id="product-name">Product Name</h1>
+            <h2 id="product-price"></h2>
+            <p id="product-description">
+                Explore this beautiful product from VELORA.
+            </p>
+
+            <button onclick="addProductToCart()">
+                Add to Cart 🛒
+            </button>
+
+            <button onclick="addProductToWishlist()">
+                ❤️ Add to Wishlist
+            </button>
+
+            <a href="index.html">Back to Shopping</a>
+        </div>
+    </div>
+
+    <script>
+        const products = JSON.parse(
+            localStorage.getItem("veloraProducts")
+        ) || [];
+
+        const productIndex = Number(
+            new URLSearchParams(window.location.search).get("id")
+        );
+
+        const product = products[productIndex];
+
+        if (!product || !Number.isInteger(productIndex)) {
+            document.querySelector(".details-container").innerHTML =
+                "<h2>Product not found. Please return to shopping.</h2>";
+        } else {
+            document.getElementById("product-image").src = product.image;
+            document.getElementById("product-name").textContent = product.name;
+            document.getElementById("product-price").textContent =
+                "₹" + product.price;
+            document.getElementById("product-description").textContent =
+                product.description || "Explore this beautiful product from VELORA.";
+        }
+
+        function addProductToCart() {
+            if (!product) return;
+
+            const cart = JSON.parse(
+                localStorage.getItem("veloraCart")
+            ) || [];
+
+            cart.push(product);
+
+            localStorage.setItem("veloraCart", JSON.stringify(cart));
+
+            alert("Product added to your cart!");
+        }
+
+        function addProductToWishlist() {
+            if (!product) return;
+
+            const wishlist = JSON.parse(
+                localStorage.getItem("veloraWishlist")
+            ) || [];
+
+            if (wishlist.some(item => item.name === product.name)) {
+                alert("Already in your wishlist!");
+                return;
+            }
+
+            wishlist.push(product);
+
+            localStorage.setItem(
+                "veloraWishlist",
+                JSON.stringify(wishlist)
+            );
+
+            alert("Product added to your wishlist!");
+        }
+    </script>
+
+</body>
+</html>

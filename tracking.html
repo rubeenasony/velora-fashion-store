@@ -1,0 +1,118 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VELORA - Track Order</title>
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        body {
+            background: #f8f3ed;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        .tracking-container {
+            max-width: 650px;
+            margin: 50px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .tracking-container input {
+            width: 90%;
+            padding: 12px;
+            margin: 12px 0;
+        }
+
+        .track-button {
+            background: #654b3c;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .tracking-step {
+            padding: 15px;
+            margin: 12px 0;
+            background: #f4eee8;
+            border-radius: 8px;
+        }
+
+        .active {
+            background: #dcebdc;
+            color: #285b32;
+            font-weight: bold;
+        }
+
+        .home-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #654b3c;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="tracking-container">
+        <h1>VELORA 🚚</h1>
+        <h2>Track Your Order</h2>
+
+        <input
+            type="number"
+            id="order-id"
+            placeholder="Enter your Order ID"
+        >
+
+        <br>
+
+        <button class="track-button" onclick="trackOrder()">
+            Track Order
+        </button>
+
+        <div id="tracking-result"></div>
+
+        <a href="index.html" class="home-link">
+            Continue Shopping
+        </a>
+    </div>
+
+    <script>
+        function trackOrder() {
+            const orderId = document.getElementById("order-id").value;
+
+            const orders = JSON.parse(
+                localStorage.getItem("veloraOrders")
+            ) || [];
+
+            const order = orders.find(
+                item => String(item.id) === orderId
+            );
+
+            const result = document.getElementById("tracking-result");
+
+            if (!order) {
+                result.innerHTML = "<p>Order not found. Please check your Order ID.</p>";
+                return;
+            }
+
+            result.innerHTML = `
+                <h3>Order #${order.id}</h3>
+                <div class="tracking-step active">✓ Order Placed</div>
+                <div class="tracking-step">○ Processing</div>
+                <div class="tracking-step">○ Shipped</div>
+                <div class="tracking-step">○ Delivered</div>
+                <p>Total: ₹${order.total}</p>
+            `;
+        }
+    </script>
+
+</body>
+</html>

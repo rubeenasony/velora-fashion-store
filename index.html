@@ -1,0 +1,289 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <title>VELORA | Fashion & Beauty</title>
+ 
+    <link rel="stylesheet" href="style.css">   
+</head>
+<body>
+
+    <!-- Announcement -->
+    <div class="announcement">
+        WELCOME TO VELORA — STYLE YOUR WORLD
+    </div>
+
+    <!-- Navigation -->
+    <header>
+        <div class="logo">VELORA<span>.</span></div>
+
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#new-arrivals">New Arrivals</a>
+            <a href="#featured">Featured</a>
+            <a href="#women">Women</a>
+            <a href="#men">Men</a>
+            <a href="#jewellery">Jewellery</a>
+            <a href="#beauty">Beauty</a>
+            <a href="#accessories">Accessories</a>
+            <a href="login.html">Login</a>
+            <a href="profile.html">My Profile</a>
+    
+            <a href="tracking.html">Track Order</a>
+            <a href="about.html">About Us</a>
+            <a href="contact.html">Contact Us</a>
+            <a href="faq.html">Help Centre</a>
+            <a href="orders.html">My Orders</a>
+            <a href="cart.html">🛍️ BAG</a>
+        </nav>
+
+        <div class="nav-actions">
+            <button onclick="searchProducts()">⌕</button>
+            <button onclick="showLogin()">♙</button>
+            <button onclick="showCart()">🛍 <span id="cart-count">0</span></button>
+        </div>
+    </header>
+    <!-- SEARCH RESULTS -->
+<section id="search-results" class="product-section">
+    <h2>Search Results</h2>
+</section>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <p class="eyebrow">THE NEW COLLECTION</p>
+            <h1>Discover Your<br>Own Style.</h1>
+            <p>Fashion, beauty and elegance — all in one place.</p>
+            <a href="#categories" class="shop-btn">SHOP NOW →</a>
+        </div>
+    </section>
+
+    <!-- Categories -->
+    <section class="section" id="categories">
+        <p class="eyebrow">EXPLORE VELORA</p>
+        <h2>Shop By Category</h2>
+
+        <div class="category-grid">
+            <a href="#women" class="category-card">
+                <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=600" alt="Women's fashion">
+                <h3>Women's Fashion</h3>
+            </a>
+
+            <a href="#men" class="category-card">
+                <img src="https://images.unsplash.com/photo-1617137968427-85924c800a22?w=600" alt="Men's fashion">
+                <h3>Men's Fashion</h3>
+            </a>
+
+            <a href="#jewellery" class="category-card">
+                <img src="https://images.unsplash.com/photo-1611652022419-a9419f74343d?w=600" alt="Jewellery">
+                <h3>Jewellery</h3>
+            </a>
+
+            <a href="#beauty" class="category-card">
+                <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=600" alt="Beauty products">
+                <h3>Beauty</h3>
+            </a>
+        </div>
+    </section>
+
+    <!-- Women's Products -->
+
+<!-- PRODUCT FILTERS -->
+<section class="section">
+    <h2>Find Your Favourite Products 🔍</h2>
+
+    <label for="category-filter">Choose Category:</label>
+    <select id="category-filter" onchange="filterProducts()">
+        <option value="all">All Categories</option>
+        <option value="women">Women</option>
+        <option value="men">Men</option>
+        <option value="jewellery">Jewellery</option>
+        <option value="beauty">Beauty</option>
+    </select>
+
+    <label for="price-filter">Sort by Price:</label>
+    <select id="price-filter" onchange="filterProducts()">
+        <option value="default">Default</option>
+        <option value="low">Lowest to Highest</option>
+        <option value="high">Highest to Lowest</option>
+    </select>
+</section>
+<!-- New Arrivals -->
+<section class="section" id="new-arrivals">
+    <p class="eyebrow">JUST LANDED</p>
+    <h2>New Arrivals</h2>
+    <div class="product-grid" id="new-arrivals-products"></div>
+</section>
+
+<!-- Featured Products -->
+<section class="section" id="featured">
+    <p class="eyebrow">HANDPICKED FOR YOU</p>
+    <h2>Featured Products</h2>
+    <div class="product-grid" id="featured-products"></div>
+</section>
+
+
+    <section class="section" id="women">
+        <p class="eyebrow">NEW ARRIVALS</p>
+        <h2>Women's Collection</h2>
+        <div class="product-grid" id="women-products"></div>
+    </section>
+
+    <!-- Men's Products -->
+    <section class="section" id="men">
+        <p class="eyebrow">MODERN ESSENTIALS</p>
+        <h2>Men's Collection</h2>
+        <div class="product-grid" id="men-products"></div>
+    </section>
+
+    <!-- Jewellery -->
+    <section class="section" id="jewellery">
+        <p class="eyebrow">TIMELESS ELEGANCE</p>
+        <h2>Jewellery Collection</h2>
+        <div class="product-grid" id="jewellery-products"></div>
+    </section>
+
+    <!-- Beauty -->
+    <section class="section" id="beauty">
+        <p class="eyebrow">YOUR BEAUTY, YOUR WAY</p>
+        <h2>Beauty Collection</h2> 
+        <div class="product-grid" id="beauty-products"></div>
+    </section>
+    <!-- Accessories -->
+<section class="section" id="accessories">
+    <p class="eyebrow">COMPLETE YOUR STYLE</p>
+    <h2>Accessories Collection</h2>
+    <div class="product-grid" id="accessories-products"></div>
+</section>
+<section class="wishlist-section">
+    <h2>My Wishlist ❤️</h2>
+    <div id="wishlist-products" class="product-grid">
+    </div>
+</section>
+    <!-- Founder -->
+    <section class="founder" id="about">
+        <p class="eyebrow">THE STORY BEHIND VELORA</p>
+        <h2>Meet Our Founder</h2>
+        <h3>Mohammed Rubeena</h3>
+        <p>Founder of VELORA</p>
+        <p>Our vision is to bring fashion, beauty and elegance together in one shopping destination.</p>
+    </section>
+
+    <!-- Footer -->
+    
+
+    <!-- Chatbot -->
+    <button class="chat-toggle" onclick="toggleChat()">💬</button>
+
+    <div class="chat-box" id="chat-box">
+        <div class="chat-header">
+            <span>VELORA Assistant</span>
+            <button onclick="toggleChat()">×</button>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+            <p class="bot-message">Hello! Welcome to VELORA. How can I help you today?</p>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="chat-input" placeholder="Ask me anything...">
+            <button onclick="startVoice()">🎙️</button>
+            <button onclick="sendMessage()">➤</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+
+<!-- Customer Testimonials -->
+<section class="section testimonials">
+    <p class="eyebrow">CUSTOMER LOVE</p>
+    <h2>What Our Customers Say</h2>
+
+    <div class="testimonial-grid">
+        <div class="testimonial-card">
+            <h3>Priya</h3>
+            <p>⭐⭐⭐⭐⭐</p>
+            <p>"Beautiful collection and amazing shopping experience!"</p>
+        </div>
+
+        <div class="testimonial-card">
+            <h3>Ananya</h3>
+            <p>⭐⭐⭐⭐⭐</p>
+            <p>"Loved the designs. VELORA is my favourite store!"</p>
+        </div>
+
+        <div class="testimonial-card">
+            <h3>Rahul</h3>
+            <p>⭐⭐⭐⭐</p>
+            <p>"Great products and stylish collections."</p>
+        </div>
+    </div>
+</section>
+
+<!-- Latest Arrivals -->
+<section class="new-arrivals" id="latest-arrivals">
+    <h2>New Arrivals</h2>
+    <p>Discover our latest fashion collection</p>
+
+    <div class="product-grid">
+        <div class="product-card">
+            <img src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=600" alt="Women's dress">
+            <h3>Elegant Dress</h3>
+            <p>₹1,499</p>
+            <button>Shop Now</button>
+        </div>
+
+        <div class="product-card">
+            <img src="https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=600" alt="Fashion shirt">
+            <h3>Classic Shirt</h3>
+            <p>₹999</p>
+            <button>Shop Now</button>
+        </div>
+
+        <div class="product-card">
+            <img src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=600" alt="Fashion handbag">
+            <h3>Luxury Handbag</h3>
+            <p>₹1,899</p>
+            <button>Shop Now</button>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Collection -->
+<section class="featured-collection" id="featured-collection">
+    <h2>Featured Collection</h2>
+    <p>Explore styles made for every occasion</p>
+
+    <div class="featured-content">
+        <div>
+            <h3>Discover Your Style</h3>
+            <p>Refresh your wardrobe with our latest fashion.</p>
+            <a href="#women">Explore Collection</a>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="velora-footer">
+    <h2>VELORA</h2>
+    <p>Style that speaks. Elegance that lasts.</p>
+
+    <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="contact.html">Contact Us</a>
+        <a href="faq.html">Help Centre</a>
+    </div>
+
+    <p>Founder: Mohammed Rubeena</p>
+    <p class="copyright">© 2026 VELORA. All Rights Reserved.</p>
+</footer>
+
+</body>
+</html>

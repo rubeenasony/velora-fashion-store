@@ -1,0 +1,191 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VELORA | Shopping Cart</title>
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        body {
+            background: #f8f6f2;
+        }
+
+        .cart-container {
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+        }
+
+        .cart-container h1 {
+            text-align: center;
+            letter-spacing: 5px;
+        }
+
+        .cart-container h2 {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            padding: 20px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-item img {
+            width: 120px;
+            height: 130px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .cart-details {
+            flex: 1;
+        }
+
+        .cart-details h3 {
+            margin-bottom: 10px;
+        }
+
+        .remove-btn {
+            background: #222;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            cursor: pointer;
+        }
+
+        .cart-total {
+            text-align: right;
+            font-size: 22px;
+            margin: 30px 0;
+        }
+
+        .cart-links {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .cart-links a {
+            background: #b89565;
+            color: white;
+            padding: 14px 22px;
+            text-decoration: none;
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 40px;
+        }
+
+        @media(max-width: 600px) {
+            .cart-item {
+                flex-wrap: wrap;
+            }
+
+            .cart-container {
+                margin: 15px;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="cart-container">
+
+    <h1>VELORA.</h1>
+    <h2>My Shopping Bag 🛍️</h2>
+
+    <div id="cart-items"></div>
+
+    <h3 class="cart-total" id="cart-total">
+        Total: ₹0
+    </h3>
+
+    <div class="cart-links">
+        <a href="index.html">← Continue Shopping</a>
+        <a href="checkout.html">Proceed to Checkout →</a>
+    </div>
+
+</div>
+
+<script>
+function displayCart() {
+
+    const cart = JSON.parse(localStorage.getItem("veloraCart")) || [];
+
+    const container = document.getElementById("cart-items");
+
+    let total = 0;
+
+    if (cart.length === 0) {
+
+        container.innerHTML = `
+            <div class="empty-cart">
+                <h2>Your Shopping Bag is Empty</h2>
+                <p>Discover something beautiful at VELORA.</p>
+                <a href="index.html">Start Shopping</a>
+            </div>
+        `;
+
+    } else {
+
+        container.innerHTML = cart.map((product, index) => {
+
+            const price = Number(product.salePrice || product.price) || 0;
+
+            total += price;
+
+            return `
+                <div class="cart-item">
+
+                    <img src="${product.image}" alt="${product.name}">
+
+                    <div class="cart-details">
+                        <h3>${product.name}</h3>
+                        <p>Price: ₹${price.toLocaleString("en-IN")}</p>
+                    </div>
+
+                    <button class="remove-btn"
+                        onclick="removeFromCart(${index})">
+                        Remove
+                    </button>
+
+                </div>
+            `;
+
+        }).join("");
+
+    }
+
+    document.getElementById("cart-total").textContent =
+        "Total: ₹" + total.toLocaleString("en-IN");
+}
+
+function removeFromCart(index) {
+
+    const cart = JSON.parse(localStorage.getItem("veloraCart")) || [];
+
+    cart.splice(index, 1);
+
+    localStorage.setItem("veloraCart", JSON.stringify(cart));
+
+    displayCart();
+}
+
+displayCart();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,76 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | VELORA</title>
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .contact-container {
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 12px;
+        }
+
+        .contact-container input,
+        .contact-container textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0 20px;
+            box-sizing: border-box;
+        }
+
+        .contact-container button {
+            background: #654b3c;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="contact-container">
+        <h1>Contact VELORA</h1>
+        <p>We would love to hear from you!</p>
+
+        <form id="contact-form">
+            <label>Your Name</label>
+            <input type="text" id="contact-name" required>
+
+            <label>Email Address</label>
+            <input type="email" id="contact-email" required>
+
+            <label>Your Message</label>
+            <textarea id="contact-message" rows="5" required></textarea>
+
+            <button type="submit">Send Message</button>
+        </form>
+
+        <p id="contact-status"></p>
+
+        <a href="index.html">Back to Shopping</a>
+    </div>
+
+    <script>
+        document.getElementById("contact-form").addEventListener(
+            "submit", function(event) {
+                event.preventDefault();
+
+                document.getElementById("contact-status").textContent =
+                    "Thank you! Your message has been received in this demo.";
+
+                this.reset();
+            }
+        );
+    </script>
+
+</body>
+</html>

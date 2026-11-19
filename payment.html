@@ -1,0 +1,103 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VELORA - Payment</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="login-container">
+        <h1>VELORA</h1>
+        <h2>Choose Payment Method 💳</h2>
+
+        <h3 id="payment-total">Total: ₹0</h3>
+
+        <form id="payment-form">
+
+            <label>
+                <input type="radio" name="payment" value="Cash on Delivery" required>
+                Cash on Delivery
+            </label>
+
+            <br><br>
+
+            <label>
+                <input type="radio" name="payment" value="UPI">
+                UPI (Demo)
+            </label>
+
+            <br><br>
+
+            <label>
+                <input type="radio" name="payment" value="Card">
+                Credit / Debit Card (Demo)
+            </label>
+
+            <br><br>
+
+            <button type="submit">Confirm Order</button>
+
+        </form>
+
+        <p><a href="checkout.html">Back to Checkout</a></p>
+        <a href="index.html">Back to Home</a>
+    </div>
+
+    
+<script>
+    const cart = JSON.parse(localStorage.getItem("veloraCart")) || [];
+
+ const subtotal = cart.reduce(
+    (sum, product) =>
+        sum + Number(product.salePrice || product.price), 0
+);
+
+const discountData = JSON.parse(
+    localStorage.getItem("veloraDiscount")
+) || {};
+
+const total = discountData.finalTotal ?? subtotal;
+
+    document.getElementById("payment-total").textContent =
+        "Total: ₹" + total;
+
+    document.getElementById("payment-form").addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        if (cart.length === 0) {
+            alert("Your cart is empty!");
+            return;
+        }
+
+        const paymentMethod = document.querySelector(
+            'input[name="payment"]:checked'
+        ).value;
+
+        const orders = JSON.parse(localStorage.getItem("veloraOrders")) || [];
+
+        const newOrder = {
+            id: Date.now(),
+            products: cart,
+            total: total,
+            paymentMethod: paymentMethod,
+            date: new Date().toLocaleString()
+        };
+
+        orders.push(newOrder);
+
+        localStorage.setItem("veloraOrders", JSON.stringify(orders));
+
+        alert("Demo order confirmed using " + paymentMethod + "!");
+
+        localStorage.removeItem("veloraCart");
+        localStorage.removeItem("veloraDiscount");
+
+        window.location.href = "success.html";
+    });
+</script>
+
+</body>
+</html>

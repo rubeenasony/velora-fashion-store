@@ -1,0 +1,131 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VELORA - Checkout</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="login-container">
+        <h1>VELORA</h1>
+        <h2>Checkout 🛍️</h2>
+        <p>Enter your delivery details</p>
+
+        <form id="checkout-form">
+            <input type="text" id="customer-name"
+                placeholder="Full Name" required>
+
+            <input type="tel" id="customer-phone"
+                placeholder="Phone Number" required>
+
+            <textarea id="customer-address"
+                placeholder="Full Delivery Address" required></textarea>
+
+            <input type="text" id="customer-city"
+                placeholder="City" required>
+
+            <input type="text" id="customer-pincode"
+                placeholder="PIN Code" required>
+
+            <hr>
+
+            <h3>Have a Coupon? 🎁</h3>
+
+            <input type="text" id="coupon-code"
+                placeholder="Enter Coupon Code">
+
+            <button type="button" onclick="applyCoupon()">
+                Apply Coupon
+            </button>
+
+            <p id="coupon-message"></p>
+
+            <h3 id="checkout-subtotal">Subtotal: ₹0</h3>
+            <h3 id="discount-amount">Discount: ₹0</h3>
+            <h2 id="checkout-total">Final Total: ₹0</h2>
+
+            <button type="submit">Place Order</button>
+        </form>
+
+        <p><a href="cart.html">Back to Cart</a></p>
+        <a href="index.html">Continue Shopping</a>
+    </div>
+
+    <script>
+        const cart = JSON.parse(
+            localStorage.getItem("veloraCart")
+        ) || [];
+
+       const subtotal = cart.reduce(
+    (sum, product) =>
+        sum + Number(product.salePrice || product.price), 0
+);
+
+        let discount = 0;
+        let appliedCode = "";
+
+        function updateTotal() {
+            document.getElementById("checkout-subtotal").textContent =
+                "Subtotal: ₹" + subtotal;
+
+            document.getElementById("discount-amount").textContent =
+                "Discount: ₹" + discount;
+
+            document.getElementById("checkout-total").textContent =
+                "Final Total: ₹" + (subtotal - discount);
+        }
+
+        function applyCoupon() {
+            const code = document.getElementById("coupon-code")
+                .value.trim().toUpperCase();
+
+            if (appliedCode) {
+                document.getElementById("coupon-message").textContent =
+                    "A coupon is already applied.";
+                return;
+            }
+
+            if (code === "VELORA10") {
+                discount = Math.round(subtotal * 0.10);
+            } else if (code === "WELCOME20") {
+                discount = Math.round(subtotal * 0.20);
+            } else {
+                document.getElementById("coupon-message").textContent =
+                    "Invalid coupon code. Please try again.";
+                return;
+            }
+
+            appliedCode = code;
+
+            document.getElementById("coupon-message").textContent =
+                "Coupon " + code + " applied successfully! 🎉";
+
+            updateTotal();
+        }
+
+        updateTotal();
+
+        document.getElementById("checkout-form")
+            .addEventListener("submit", function(event) {
+                event.preventDefault();
+
+                if (cart.length === 0) {
+                    alert("Your cart is empty!");
+                    return;
+                }
+
+                localStorage.setItem("veloraDiscount", JSON.stringify({
+                    code: appliedCode,
+                    discount: discount,
+                    finalTotal: subtotal - discount
+                }));
+
+                window.location.href = "payment.html";
+            });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile | VELORA</title>
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .profile-container {
+            max-width: 550px;
+            margin: 50px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+        }
+
+        .profile-container input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0 20px;
+            box-sizing: border-box;
+        }
+
+        .profile-container button {
+            background: #654b3c;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="profile-container">
+        <h1>My Account</h1>
+        <p>Welcome to VELORA!</p>
+
+        <form id="profile-form">
+            <label>Full Name</label>
+            <input type="text" id="profile-name"
+                   placeholder="Enter your name" required>
+
+            <label>Email Address</label>
+            <input type="email" id="profile-email"
+                   placeholder="Enter your email" required>
+
+            <button type="submit">Save Profile</button>
+        </form>
+
+        <p id="profile-message"></p>
+
+        <a href="index.html">Back to Shopping</a>
+    </div>
+
+    <script>
+        const savedProfile = JSON.parse(
+            localStorage.getItem("veloraProfile")
+        );
+
+        if (savedProfile) {
+            document.getElementById("profile-name").value =
+                savedProfile.name;
+
+            document.getElementById("profile-email").value =
+                savedProfile.email;
+        }
+
+        document.getElementById("profile-form").addEventListener(
+            "submit", function(event) {
+                event.preventDefault();
+
+                const profile = {
+                    name: document.getElementById("profile-name").value,
+                    email: document.getElementById("profile-email").value
+                };
+
+                localStorage.setItem(
+                    "veloraProfile",
+                    JSON.stringify(profile)
+                );
+
+                document.getElementById("profile-message").textContent =
+                    "Profile saved successfully!";
+            }
+        );
+    </script>
+
+</body>
+</html>

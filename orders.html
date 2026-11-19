@@ -1,0 +1,135 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Orders | VELORA</title>
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        body {
+            background: #f8f3ed;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        .orders-container {
+            max-width: 850px;
+            margin: 40px auto;
+        }
+
+        .order-card {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px #00000010;
+        }
+
+        .order-card img {
+            width: 90px;
+            height: 90px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .order-product {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        h1, h2 {
+            color: #654b3c;
+        }
+
+        .home-button {
+            display: inline-block;
+            padding: 12px 22px;
+            background: #654b3c;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="orders-container">
+        <h1>VELORA</h1>
+        <h2>My Orders 📦</h2>
+
+        <div id="orders-list"></div>
+
+        <a href="index.html" class="home-button">
+            Continue Shopping
+        </a>
+    </div>
+
+    <script>
+        const orders = JSON.parse(
+            localStorage.getItem("veloraOrders")
+        ) || [];
+
+        const container = document.getElementById("orders-list");
+
+        if (orders.length === 0) {
+            container.innerHTML = "<p>You have no previous orders.</p>";
+        } else {
+            container.innerHTML = orders.slice().reverse().map(order => `
+                <div class="order-card">
+                    <h3>Order #${order.id}</h3>
+                    <p>Date: ${order.date}</p>
+                    <p>Payment: ${order.paymentMethod}</p>
+
+                    ${order.products.map(product => `
+                        <div class="order-product">
+                            <img src="${product.image}" alt="${product.name}">
+                            <div>
+                                <strong>${product.name}</strong>
+                                <p>
+    ${product.salePrice
+        ? `<del>₹${product.price}</del> <strong>₹${product.salePrice}</strong>`
+        : `₹${product.price}`}
+</p>
+                            </div>
+                        </div>
+                    `).join("")}
+
+                    <h3>Total: ₹${order.total}</h3>
+                    <button onclick="cancelOrder(${order.id})">
+    Cancel Order
+</button>
+                    <div class="tracking-status">
+    <h4>Track Your Order 📦</h4>
+    <p class="current">🟢 Order Confirmed</p>
+    <p class="pending">Processing</p>
+    <p class="pending">🚚 Shipped</p>
+    <p class="pending">📍 Out for Delivery</p>
+    <p class="pending">🎉 Delivered</p>
+</div>
+                </div>
+            `).join("");
+        }
+        function cancelOrder(orderId) {
+    if (!confirm("Are you sure you want to cancel this order?")) {
+        return;
+    }
+
+    let orders = JSON.parse(
+        localStorage.getItem("veloraOrders")
+    ) || [];
+
+    orders = orders.filter(order => order.id !== orderId);
+
+    localStorage.setItem("veloraOrders", JSON.stringify(orders));
+
+    location.reload();
+}
+    </script>
+
+</body>
+</html>
